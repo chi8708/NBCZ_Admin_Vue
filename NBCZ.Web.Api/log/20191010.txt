@@ -1,0 +1,63 @@
+
+2019-10-10 10:06:53,629 [7] ERROR InfoLog - 
+ url:/api/values/1
+ exception:aaa
+ contextdata:
+ 
+
+2019-10-10 10:10:09,341 [6] ERROR GlobalLog - 
+ url:/api/values/1
+ exception:aaa
+ contextdata:
+ 
+
+2019-10-10 10:12:48,422 [8] ERROR NBCZ.Web.Api.WebApiExceptionAttribute - 
+ url:/api/values/1
+ exception:aaa
+ contextdata:
+ 
+
+2019-10-10 10:13:08,730 [9] INFO  RequestLog - http://localhost:51534/api/PubFunction/GetChildList/
+ data:
+
+2019-10-10 10:13:08,730 [10] INFO  RequestLog - http://localhost:51534/api/PubFunction/GetList
+ data:
+
+2019-10-10 10:13:08,731 [9] INFO  RequestLog - http://localhost:51534/api/PubFunction/GetList
+ data:
+
+2019-10-10 10:25:37,669 [7] ERROR NBCZ.Web.Api.WebApiExceptionAttribute - 
+ url:/api/values/1
+ exception:aaa
+ contextdata:
+ 
+
+2019-10-10 10:27:09,162 [6] ERROR NBCZ.Web.Api.WebApiExceptionAttribute - 
+ url:/api/PubUser/GetAccess
+ exception:未将对象引用设置到对象的实例。
+ contextdata:
+ 
+
+2019-10-10 10:35:25,740 [7] ERROR NBCZ.Web.Api.WebApiExceptionAttribute - 
+ url:/api/values/1
+ exception:
+ contextdata:
+ 
+
+2019-10-10 10:39:19,832 [7] ERROR NBCZ.Web.Api.WebApiExceptionAttribute - 
+ url:/api/values/1
+ exception:aaa
+ contextdata:
+ 
+
+2019-10-10 10:41:58,821 [6] ERROR NBCZ.Web.Api.WebApiExceptionAttribute - 
+ url:/api/values/1
+ exception:   在 System.Web.Http.ApiController.<InvokeActionWithExceptionFilters>d__1.MoveNext()
+ contextdata:
+ 
+
+2019-10-10 10:45:11,056 [7] ERROR NBCZ.Web.Api.WebApiExceptionAttribute - 
+ url:/api/values/1
+ exception:尝试除以零。
+ contextdata:
+ 
