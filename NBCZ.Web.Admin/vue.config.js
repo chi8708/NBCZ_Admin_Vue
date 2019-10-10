@@ -40,4 +40,12 @@ module.exports = {
   // devServer: {
   //   proxy: 'localhost:3000'
   // }
+
+  //cts 添加
+  ,configureWebpack: {
+    devtool: 'source-map'//vs code调试需此代码
+  }
+  ,devServer: {
+      port:8015//客户端
+    }
 }
