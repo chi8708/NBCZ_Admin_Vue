@@ -1,0 +1,12 @@
+/packages
+/NBCZ.BLL/obj
+/NBCZ.BLL/bin
+/NBCZ.DAL/obj
+/NBCZ.DAL/bin
+/NBCZ.Common/obj
+/NBCZ.Common/bin
+/NBCZ.DBUtility/*
+/NBCZ.Model/obj
+/NBCZ.Model/bin
+/NBCZ.Web.Api/obj
+/NBCZ.Web.Api/bin
