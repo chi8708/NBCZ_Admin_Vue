@@ -72,6 +72,9 @@ class HttpRequest {
         }
       }
       //cts add
+      if(errorInfo.status=="401"&&window.location.hash=='#login'){
+        return Promise.reject(error);
+      }
       if(errorInfo.status=="401"){
         window.location.reload();
       }

@@ -80,16 +80,17 @@ namespace NBCZ.Web.Api
             }
         }
 
-        public  string Access
+        public  List<string> Access
         {
             get
             {
-                var userFunctions = new Pub_UserFunctionBLL().GetList(string.Format("UserCode='{0}'", this.UserCode)).Select(p => p.FunctionCode);
-                var roleFunctions = new Pub_RoleFunctionBLL().GetList(string.Format(" RoleCode IN(SELECT pur.RoleCode FROM Pub_UserRole AS pur WHERE pur.UserCode='{0}' )", this.UserCode)).Select(p => p.FunctionCode);
-                var functions = userFunctions.Concat(roleFunctions).Distinct();
-                var functionsStr = string.Join(",", functions);
+                //var userFunctions = new Pub_UserFunctionBLL().GetList(string.Format("UserCode='{0}'", this.UserCode)).Select(p => p.FunctionCode);
+                //var roleFunctions = new Pub_RoleFunctionBLL().GetList(string.Format(" RoleCode IN(SELECT pur.RoleCode FROM Pub_UserRole AS pur WHERE pur.UserCode='{0}' )", this.UserCode)).Select(p => p.FunctionCode);
+                //var functions = userFunctions.Concat(roleFunctions).Distinct();
+                var functions = new Pub_FunctionBLL().GetUserAccess(this.UserCode);
+              //  var functionsStr = string.Join(",", functions);
 
-                return functionsStr;
+                return functions;
             }
         }
     }

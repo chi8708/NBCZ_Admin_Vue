@@ -1,5 +1,8 @@
 import axios from '@/libs/api.request'
 import store from '@/store'
+import $ from 'jquery';
+import config from '@/config'
+const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
 
 var token=store.state.user.token;
 export const getFunctions = () => {
@@ -48,4 +51,26 @@ export const remove=(id)=>{
     headers: {Authorization:"Bearer "+token},
     method: 'post'
   })
+}
+
+//停用
+// export const getMenu=()=>{
+//   return  axios.request({
+//     url: '',
+//     method: 'post'
+//   })
+// }
+
+export const getMenu=()=>{
+  var data;
+  $.ajax({
+    type: 'post',
+    url: baseUrl+'/api/PubFunction/getMenu',
+    dataType: 'Json',
+    async: false,
+    success: function (res) {
+      data=res;
+    }
+  })
+  return data;
 }

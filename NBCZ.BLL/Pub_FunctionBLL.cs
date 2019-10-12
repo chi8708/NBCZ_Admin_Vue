@@ -1,4 +1,5 @@
-﻿using NBCZ.Model;
+﻿using NBCZ.DAL;
+using NBCZ.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ namespace NBCZ.BLL
 {
    public partial class Pub_FunctionBLL
     {
+       Pub_FunctionDAL dal = new Pub_FunctionDAL();
         /// <summary>
         /// 获取编号
         /// </summary>
@@ -29,6 +31,24 @@ namespace NBCZ.BLL
             }
 
             return code;
+        }
+
+        /// <summary>
+        /// 获取用户权限列表
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetUserAccess(string userCode)
+        {
+            return dal.GetUserAccess(userCode);
+        }
+
+       /// <summary>
+       /// 获取用户菜单
+       /// </summary>
+       /// <returns></returns>
+        public List<Pub_Function> GetMenu(string userCode) 
+        {
+            return dal.GetMenu(userCode);
         }
     }
 }

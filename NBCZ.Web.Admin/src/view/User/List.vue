@@ -100,10 +100,10 @@ export default {
       isAdd: true,
       eidtRow: {},
       userAccess:{
-        isAdd:userAccessAll.indexOf(`,${pubUser.USERINFOADD},`)>0,
-        isEdit:userAccessAll.indexOf(`,${pubUser.USERINFOEDIT},`)>0,
-        isMove:userAccessAll.indexOf(`,${pubUser.USERINFOREMOVE},`)>0,
-        isAuth:userAccessAll.indexOf(`,${pubUser.USERINFOAUTH},`)>0
+        isAdd:userAccessAll.indexOf(`,${pubUser.USERINFOADD},`)>-1,
+        isEdit:userAccessAll.indexOf(`,${pubUser.USERINFOEDIT},`)>-1,
+        isMove:userAccessAll.indexOf(`,${pubUser.USERINFOREMOVE},`)>-1,
+        isAuth:userAccessAll.indexOf(`,${pubUser.USERINFOAUTH},`)>-1
       },
       tableColumns1: [
         {

@@ -11,7 +11,7 @@ namespace NBCZ.Web.Api.Controllers
 {
     [RoutePrefix("api/PubFunction")]
     [JwtAuthentication]
-    public class PubFunctionController :BaseController
+    public class PubFunctionController : BaseController
     {
         Pub_FunctionBLL bll = new Pub_FunctionBLL();
         V_PubFunction_ParentBLL functionParentBLL = new V_PubFunction_ParentBLL();
@@ -19,7 +19,7 @@ namespace NBCZ.Web.Api.Controllers
         [Route("GetList")]
         public DataRes<List<Pub_Function>> GetList()
         {
-            var depts = bll.GetList("StopFlag=0"," sortidx asc");
+            var depts = bll.GetList("StopFlag=0", " sortidx asc");
 
             return new DataRes<List<Pub_Function>>() { data = depts };
         }
@@ -32,7 +32,7 @@ namespace NBCZ.Web.Api.Controllers
         [HttpPost]
         [Route("GetChildList")]
         [Route("GetChildList/{code}")]
-        public DataRes<List<V_PubFunction_Parent>> GetChildList(string code= "FC001")
+        public DataRes<List<V_PubFunction_Parent>> GetChildList(string code = "FC001")
         {
 
             var depts = functionParentBLL.GetList(string.Format(" StopFlag=0 And FunctionCode IN (Select FunctionCode From f_SearchChildFunction('{0}'))", code), " FunctionCode ");
@@ -51,7 +51,7 @@ namespace NBCZ.Web.Api.Controllers
         {
             DataRes<bool> res = new DataRes<bool>() { code = ResCode.Success, data = true };
 
-            model.FunctionCode =bll.GetCode(model.ParentCode);
+            model.FunctionCode = bll.GetCode(model.ParentCode);
             model.editdate = DateTime.Now;
             var user = User.GetNBCZUser();
             model.editor = string.Format("{0}-{1}", user.UserCode, user.UserName);
@@ -70,9 +70,9 @@ namespace NBCZ.Web.Api.Controllers
         {
             DataRes<bool> res = new DataRes<bool>() { code = ResCode.Success, data = true };
 
-            model.editdate= DateTime.Now;
+            model.editdate = DateTime.Now;
             var user = User.GetNBCZUser();
-            model.editor = string.Format("{0}-{1}",user.UserCode,user.UserName);
+            model.editor = string.Format("{0}-{1}", user.UserCode, user.UserName);
             var r = bll.Update(model);
             if (!r)
             {
@@ -94,7 +94,7 @@ namespace NBCZ.Web.Api.Controllers
         {
             DataRes<bool> res = new DataRes<bool>() { code = ResCode.Success, data = true };
 
-            var r = bll.ChangeSotpStatus("FunctionCode='"+id+"'");
+            var r = bll.ChangeSotpStatus("FunctionCode='" + id + "'");
             if (!r)
             {
                 res.code = ResCode.Error;
@@ -104,5 +104,134 @@ namespace NBCZ.Web.Api.Controllers
 
             return res;
         }
+
+        /// <summary>
+        /// 获取左侧菜单
+        /// </summary>
+        /// <returns></returns>
+        [Route("GetMenu")]
+        [HttpPost]
+        [AllowAnonymous]
+        public DataRes<List<Menu>> GetMenu()
+        {
+            List<Menu> menus = new List<Menu>();
+
+            DataRes<List<Menu>> res = new DataRes<List<Menu>>() { code = ResCode.Success, data = menus };
+           // List<Pub_Function> functions= bll.GetMenu(User.GetNBCZUser().UserCode);
+            List<Pub_Function> functions = bll.GetMenu("");
+            List<Pub_Function> functionsRoot = functions.Where(p=>p.FunctionCode.Length==5).ToList();
+            foreach (var item in functionsRoot)
+            {
+                Menu menu = GetMenuItem(item);
+                var children=  GetMenuChild(functions, item.FunctionCode);
+                if (children != null && children.Count > 0)
+                {
+                    menu.children = children;
+                }
+                menus.Add(menu);
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// 菜单明细项
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+
+        private Menu GetMenuItem(Pub_Function item) 
+        {
+            Menu menu = new Menu();
+            menu.path = item.RouterPath;
+            menu.name = item.FunctionEnglish;
+            menu.meta = new Menu.Meta()
+            {
+                icon = item.MenuIcon,
+                notCache = !item.IsCache.Value,
+                title = item.FunctionChina,
+                access=new List<string>(){item.FunctionCode}
+            };
+            menu.component = item.URLString;
+            return menu;
+        }
+
+        /// <summary>
+        /// 菜单子项
+        /// </summary>
+        /// <param name="functions"></param>
+        /// <param name="parentCode"></param>
+        /// <returns></returns>
+        private List<Menu> GetMenuChild(List<Pub_Function> functions, string parentCode) 
+        {
+            List<Menu> menus = new List<Menu>();
+            var childrenFun = functions.Where(p => p.ParentCode == parentCode);
+            if (childrenFun == null || childrenFun.Count() <= 0)
+            {
+                return menus;
+            }
+
+            foreach (var item in childrenFun)
+            {
+                Menu menu = GetMenuItem(item);
+                var children = GetMenuChild(functions, item.FunctionCode);
+                if (children!=null&&children.Count>0)
+                {
+                    menu.children = children;
+                }
+
+                menus.Add(menu);
+            }
+
+            return menus;
+
+        }
+
+        public class Menu
+        {
+            /// <summary>
+            /// 路由路径
+            /// </summary>
+            public string path { get; set; }
+
+            /// <summary>
+            /// 名称
+            /// </summary>
+            public string name { get; set; }
+
+            public Meta meta { get; set; }
+
+            /// <summary>
+            /// 子组件
+            /// </summary>
+            public List<Menu> children { get; set; }
+
+            public class Meta
+            {
+                /// <summary>
+                /// 图标
+                /// </summary>
+                public string icon { get; set; }
+
+                /// <summary>
+                /// 不缓存 
+                /// </summary>
+                public bool? notCache { get; set; }
+
+                /// <summary>
+                /// 标题
+                /// </summary>
+                public string title { get; set; }
+
+                /// <summary>
+                /// 权限列表
+                /// </summary>
+                public List<string> access { get; set; }
+            }
+
+            public string component { get; set; }
+
+        }
+
     }
 }

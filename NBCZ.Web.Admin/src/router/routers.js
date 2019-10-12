@@ -1,5 +1,6 @@
 import Main from '@/components/main'
 import parentView from '@/components/parent-view'
+import {getMenu} from "@/api/pubFunction"
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -17,7 +18,7 @@ import parentView from '@/components/parent-view'
  * }
  */
 
-export default [
+let menus= [
   {
     path: '/login',
     name: 'login',
@@ -71,57 +72,6 @@ export default [
       }
     ]
   },
-  {
-   
-    path: '/baseSet',
-    name: 'baseSet',
-    meta: {
-      icon: 'logo-buffer',
-      title: '基础设置'
-    },
-    component: Main,
-    children: [
-      {
-       
-        path: 'userManage',
-        name: 'userManage',
-        meta: {
-          icon: 'md-arrow-dropdown-circle',
-          notCache: false,
-          title: '用户信息'
-        },
-        component: () => import('@/view/User/List.vue')
-      },
-      {
-        path: 'roleManage',
-        name: 'roleManage',
-        meta: {
-          icon: 'md-trending-up',
-          title: '角色信息'
-        },
-        component: () => import('@/view/Role/List.vue')
-      },
-      {
-        path: 'functionManage',
-        name: 'functionManage',
-        meta: {
-          icon: 'ios-infinite',
-          title: '权限信息'
-        },
-        component: () => import('@/view/Permission/List.vue')
-      },
-      {
-        path: 'companyManage',
-        name: 'companyManage',
-        meta: {
-          icon: 'ios-people',
-          title: '组织结构'
-        },
-        component: () => import('@/view/Dept/List.vue')
-      }
-    ]
-  },
- 
   {
     path: '/argu',
     name: 'argu',
@@ -178,3 +128,42 @@ export default [
     component: () => import('@/view/error-page/404.vue')
   }
 ]
+
+
+ var resMenu= getMenu();
+ if(resMenu.code==1){
+   var resMenuData=resMenu.data;
+   menuReset(resMenuData);
+   resMenuData.forEach(item=>{
+     menus.push(item);
+   })
+ }
+ //菜单重置
+function menuReset(resMenuData){
+  if(!resMenuData||resMenuData.length<=0){
+    return;
+  }
+  resMenuData.forEach(item => {
+    menuItemReset(item);
+    var child=item.children;
+    if(child&&child.length>0){
+      menuReset(child);
+    }
+    else{
+     delete item.children;
+    }
+  });
+}
+
+function menuItemReset(item){
+  if(item.component.toLowerCase()=='main'){
+    item.component=Main;
+  }
+  else{
+    var path=item.component;
+    var component = ()=>import(`@/${path}`);
+    item.component=component;
+  }
+}
+
+export default menus

@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Pub_FunctionDAL.cs" />
     <Compile Include="Pub_UserDAL.cs" />
     <Compile Include="T4.DapperExt\BaseDataDapperContrib.cs" />
     <Compile Include="T4.DapperExt\Pub_DepartmentDAL.cs">
