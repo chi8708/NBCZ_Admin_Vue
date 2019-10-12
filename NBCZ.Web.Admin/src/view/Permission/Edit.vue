@@ -3,28 +3,20 @@
     <Form ref="formInline" label-position="right" :model="Row" :rules="rule" :label-width="100">
       <Row>
         <Col span="24">
-          <FormItem label="父级"  id="item-parentName">
-            <Input
-              search
-              enter-button
-              v-model="Row.parentName"
-              @on-search="functionSelect"
-            />
+          <FormItem label="父级" id="item-parentName">
+            <Input search enter-button v-model="Row.parentName" @on-search="functionSelect" />
             <!-- <Tree :data="functionTree"></Tree> -->
             <!-- <Input type="password" v-model="Row.functionCode" /> -->
           </FormItem>
         </Col>
       </Row>
       <Row>
-        <Col span="24">
+        <Col span="12">
           <FormItem label="中文名" prop="functionChina">
             <Input v-model="Row.functionChina" />
           </FormItem>
         </Col>
-      </Row>
-
-      <Row>
-        <Col span="24">
+        <Col span="12">
           <FormItem label="英文名" prop="functionEnglish">
             <Input v-model="Row.functionEnglish" />
           </FormItem>
@@ -32,7 +24,7 @@
       </Row>
 
       <Row>
-        <Col span="24">
+        <Col span="12">
           <FormItem label="是否菜单" prop="menuFlag">
             <RadioGroup v-model="Row.menuFlag">
               <Radio :label="1">
@@ -44,24 +36,39 @@
             </RadioGroup>
           </FormItem>
         </Col>
+        <Col span="12">
+          <FormItem label="是否缓存" prop="isCache" v-show="Row.menuFlag==1">
+            <RadioGroup v-model="Row.isCache">
+              <Radio :label="1">
+                <span>是</span>
+              </Radio>
+              <Radio :label="0">
+                <span>否</span>
+              </Radio>
+            </RadioGroup>
+          </FormItem>
+        </Col>
       </Row>
 
-      <Row>
-        <Col span="24">
-          <FormItem label="URL" prop="urlString">
+      <Row v-show="Row.menuFlag==1">
+        <Col span="12">
+          <FormItem label="组件地址" prop="urlString">
             <Input v-model="Row.urlString" />
+          </FormItem>
+        </Col>
+        <Col span="12">
+          <FormItem label="路由规则" prop="routerPath">
+            <Input v-model="Row.routerPath" />
           </FormItem>
         </Col>
       </Row>
       <Row>
-        <Col span="24">
+        <Col span="12">
           <FormItem label="排序号" prop="sortidx">
             <Input v-model="Row.sortidx" />
           </FormItem>
         </Col>
-      </Row>
-      <Row>
-        <Col span="24">
+        <Col span="12">
           <FormItem label="图标样式" prop="menuIcon">
             <Input v-model="Row.menuIcon" />
           </FormItem>
@@ -97,10 +104,9 @@
       footer-hide
       id="parent-modal"
     >
-     <div style="height: 500px;overflow: auto;">
+      <div style="height: 500px;overflow: auto;">
         <function-tree :parent="this"></function-tree>
-     </div>
-
+      </div>
     </Modal>
   </div>
 </template>
@@ -169,7 +175,11 @@ export default {
               if (code == 1) {
                 this.$Message.info("添加成功");
                 this.parent.modelEdit = false;
-                this.parent.reloadAll(this.Row.parentCode!="0"?this.Row.parentCode:this.Row.functionCode);
+                this.parent.reloadAll(
+                  this.Row.parentCode != "0"
+                    ? this.Row.parentCode
+                    : this.Row.functionCode
+                );
               } else {
                 this.$Message.error({
                   content: msg,
@@ -194,7 +204,11 @@ export default {
               if (code == 1) {
                 this.$Message.info("编辑成功");
                 this.parent.modelEdit = false;
-                this.parent.reloadAll(this.Row.parentCode!="0"?this.Row.parentCode:this.Row.functionCode);
+                this.parent.reloadAll(
+                  this.Row.parentCode != "0"
+                    ? this.Row.parentCode
+                    : this.Row.functionCode
+                );
               } else {
                 this.$Message.error({
                   content: msg,
@@ -225,6 +239,7 @@ export default {
     editRow(newVal, oldVal) {
       this.Row = Object.assign({}, newVal);
       this.Row.menuFlag = this.Row.menuFlag === false ? 0 : 1;
+      this.Row.isCache = this.Row.isCache === false ? 0 : 1;
     }
   },
   mounted() {}

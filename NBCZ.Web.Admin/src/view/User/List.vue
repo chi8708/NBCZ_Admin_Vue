@@ -92,6 +92,12 @@ export default {
   data() {
     const userAccessAll=this.$store.state.user.access;
     return {
+      userAccess:{
+        isAdd:userAccessAll.includes(`${pubUser.ADD}`),
+        isEdit:userAccessAll.includes(`${pubUser.EDIT}`),
+        isMove:userAccessAll.includes(`${pubUser.REMOVE}`),
+        isAuth:userAccessAll.includes(`${pubUser.AUTH}`)
+      },
       tableData1: [],
       queryData: {},
       pageTotal: 0,
@@ -100,12 +106,6 @@ export default {
       modelPermission:false,
       isAdd: true,
       eidtRow: {},
-      userAccess:{
-        isAdd:userAccessAll.includes(`${pubUser.USERINFOADD}`),
-        isEdit:userAccessAll.includes(`${pubUser.USERINFOEDIT}`),
-        isMove:userAccessAll.includes(`${pubUser.USERINFOREMOVE}`),
-        isAuth:userAccessAll.includes(`${pubUser.USERINFOAUTH}`)
-      },
       tableColumns1: [
         {
           title: "编号",
@@ -179,8 +179,7 @@ export default {
     changePageSize(pageSize) {
       this.setPageData(1, pageSize);
     },
-    handleDelete(params) {
-      var row = params;
+    handleDelete(row) {
       this.$Modal.confirm({
         title: "提示",
         content: "<p>确定要删除[" + row.id + "]?</p>",
@@ -197,14 +196,14 @@ export default {
       this.isAdd = true;
       this.eidtRow = {};
     },
-    handleEdit(params) {
+    handleEdit(row) {
       this.modelEdit = true;
       this.isAdd = false;
-      this.eidtRow = params;
+      this.eidtRow = row;
     },
-    handlePermission(params) {
+    handlePermission(row) {
       this.modelPermission = true;
-      this.eidtRow = params;
+      this.eidtRow = row;
     },
     removeUser(row) {
       var id = row.id;

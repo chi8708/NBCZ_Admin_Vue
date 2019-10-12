@@ -15,11 +15,17 @@
 
     <Card>
       <div>
-        <Button class="search-btn" type="success" size="small" @click="handleAdd">
+        <Button v-if="userAccess.isAdd" class="search-btn" type="success" size="small" @click="handleAdd">
           <Icon type="md-add" />&nbsp;&nbsp;新增
         </Button>
       </div>
-      <Table ref="tables" :data="tableData1" v-bind:columns="tableColumns1" stripe></Table>
+      <Table ref="tables" :data="tableData1" v-bind:columns="tableColumns1" stripe>
+        <template slot-scope="{ row, index }" slot="action">
+            <Button v-if="userAccess.isAuth" type="default"  size="small" icon="md-key" style="margin-right: 5px" @click="handlePermission(row)">授权</Button>
+            <Button v-if="userAccess.isEdit" type="primary" size="small" icon="md-create" style="margin-right: 5px" @click="handleEdit(row)">编辑</Button>
+            <Button v-if="userAccess.isMove" type="error"  size="small" icon="md-trash" @click="handleDelete(row)">删除</Button>
+        </template>
+      </Table>
       <!-- <tables ref="tables" editable v-model="tableData1" :columns="tableColumns1" @on-delete="handleDelete" stripe /> -->
       <div style="margin: 10px;overflow: hidden">
         <div style="float: right;">
@@ -67,16 +73,24 @@ import "@/assets/css/util.less";
 import Edit from "./Edit";
 import Permission from "./Permission";
 import { getPage, remove} from "@/api/pubRole";
-
+import { pubRole } from "@/access/pubRole"
 export default {
   //  name: 'tables_page',
+  name: 'ROLEINFO',//与 router.js notCache:fasle且name相同 将缓存组件。
   components: {
     // Tables
     Edit,
     Permission
   },
   data() {
+    const userAccessAll=this.$store.state.user.access;
     return {
+      userAccess:{
+        isAdd:userAccessAll.includes(`${pubRole.ADD}`),
+        isEdit:userAccessAll.includes(`${pubRole.EDIT}`),
+        isMove:userAccessAll.includes(`${pubRole.REMOVE}`),
+        isAuth:userAccessAll.includes(`${pubRole.AUTH}`)
+      },
       tableData1: [],
       queryData: {},
       pageTotal: 0,
@@ -103,76 +117,11 @@ export default {
           key: "lmid"
         },
         {
-          title: "操作",
-          key: "action",
-          width: 300,
-          align: "center",
-          render: (h, params) => {
-            return h("div", [
-               h(
-                "Button",
-                {
-                  props: {
-                    type: "default",
-                    size: "small",
-                    icon: "md-key"
-                  },
-                  style: {
-                    marginRight: "5px"
-                  },
-                  on: {
-                    click: () => {
-                      this.handlePermission(params);
-                    }
-                  }
-                },
-                "授权"
-              ),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "primary",
-                    size: "small",
-                    icon: "md-create"
-                  },
-                  style: {
-                    marginRight: "5px"
-                  },
-                  on: {
-                    click: () => {
-                      this.handleEdit(params);
-                    }
-                  }
-                },
-                "编辑"
-              ),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "error",
-                    size: "small",
-                    icon: "md-trash"
-                  },
-                  on: {
-                    click: () => {
-                      this.handleDelete(params);
-                    }
-                  }
-                },
-                "删除"
-              )
-            ]);
-          }
+              title: '操作',
+              slot: 'action',
+              width: 300,
+              align: 'center'
         }
-        // {
-        //     title: 'Updated Time',
-        //     key: 'update',
-        //     render: (h, params) => {
-        //         return h('div', this.formatDate(this.tableData1[params.index].update));
-        //     }
-        // }
       ]
     };
   },
@@ -215,8 +164,7 @@ export default {
     changePageSize(pageSize) {
       this.setPageData(1, pageSize);
     },
-    handleDelete(params) {
-      var row = params.row;
+    handleDelete(row) {
       this.$Modal.confirm({
         title: "提示",
         content: "<p>确定要删除[" + row.id + "]?</p>",
@@ -233,14 +181,14 @@ export default {
       this.isAdd = true;
       this.eidtRow = {};
     },
-    handleEdit(params) {
+    handleEdit(row) {
       this.modelEdit = true;
       this.isAdd = false;
-      this.eidtRow = params.row;
+      this.eidtRow = row;
     },
-    handlePermission(params) {
+    handlePermission(row) {
       this.modelPermission = true;
-      this.eidtRow = params.row;
+      this.eidtRow = row;
     },
     remove(row) {
       var id = row.id;

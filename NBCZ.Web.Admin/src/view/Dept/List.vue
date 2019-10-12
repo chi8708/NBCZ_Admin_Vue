@@ -18,12 +18,18 @@
       <div slot="right" class="demo-split-pane">
         <h3>同级及下级</h3>
         <div>
-          <Button class="search-btn" type="success" size="small" @click="handleAdd">
-            <Icon type="md-add" />&nbsp;&nbsp;新增
+          <Button v-if="userAccess.isAdd" class="search-btn" type="success" size="small" @click="handleAdd">
+          <Icon type="md-add" />&nbsp;&nbsp;新增
           </Button>
         </div>
         <div>
-            <Table ref="tables" height="700"  :data="tableData1" v-bind:columns="tableColumns1" stripe></Table>
+            <Table ref="tables" height="700"  :data="tableData1" v-bind:columns="tableColumns1" stripe>
+               <template slot-scope="{ row, index }" slot="action">
+                  <Button v-if="userAccess.isAuth" type="default"  size="small" icon="md-key" style="margin-right: 5px" @click="handlePermission(row)">授权</Button>
+                  <Button v-if="userAccess.isEdit" type="primary" size="small" icon="md-create" style="margin-right: 5px" @click="handleEdit(row)">编辑</Button>
+                  <Button v-if="userAccess.isMove" type="error"  size="small" icon="md-trash" @click="handleDelete(row)">删除</Button>
+               </template>
+            </Table>
         </div>
       
       </div>
@@ -46,9 +52,17 @@
 import DeptTree from "./DeptTree"
 import Edit from "./Edit"
 import {getChildList,remove} from "@/api/pubDept"
+import { pubDept } from "@/access/pubDept"
 export default {
   data() {
+    const userAccessAll=this.$store.state.user.access;
     return {
+      userAccess:{
+        isAdd:userAccessAll.includes(`${pubDept.ADD}`),
+        isEdit:userAccessAll.includes(`${pubDept.EDIT}`),
+        isMove:userAccessAll.includes(`${pubDept.REMOVE}`),
+        isAuth:userAccessAll.includes(`${pubDept.AUTH}`)
+      },
       split1: "300",
       tableData1: [],
       pageTotal: 0,
@@ -75,50 +89,10 @@ export default {
           key: "lmid"
         },
         {
-          title: "操作",
-          key: "action",
-          width: 200,
-          align: "center",
-          render: (h, params) => {
-            return h("div", [
-              // ios-create-outline
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "primary",
-                    size: "small",
-                    icon: "md-create"
-                  },
-                  style: {
-                    marginRight: "5px"
-                  },
-                  on: {
-                    click: () => {
-                      this.handleEdit(params);
-                    }
-                  }
-                },
-                "编辑"
-              ),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "error",
-                    size: "small",
-                    icon: "md-trash"
-                  },
-                  on: {
-                    click: () => {
-                      this.handleDelete(params);
-                    }
-                  }
-                },
-                "删除"
-              )
-            ]);
-          }
+              title: '操作',
+              slot: 'action',
+              width: 300,
+              align: 'center'
         }
       ]
     };
@@ -143,8 +117,7 @@ export default {
         })
         .catch(err => {});
     },
-    handleDelete(params) {
-      var row = params.row;
+    handleDelete(row) {
       this.$Modal.confirm({
         title: "提示",
         content: "<p>确定要删除[" + row.deptCode + "]?</p>",
@@ -161,10 +134,10 @@ export default {
       this.isAdd = true;
       this.eidtRow = {};
     },
-    handleEdit(params) {
+    handleEdit(row) {
       this.modelEdit = true;
       this.isAdd = false;
-      this.eidtRow = params.row;
+      this.eidtRow = row;
     },
     remove(row) {
       var id = row.deptCode;

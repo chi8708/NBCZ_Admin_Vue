@@ -1,4 +1,5 @@
 import axios from '@/libs/api.request'
+import { promised } from 'q';
 
 export const getTableData = () => {
   return axios.request({

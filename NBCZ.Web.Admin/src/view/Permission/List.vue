@@ -1,5 +1,5 @@
 <style>
-.content-main{
+.content-main {
   height: 99%;
   border: 1px solid #dcdee2;
   /* background-color: #fff; */
@@ -18,17 +18,27 @@
       <div slot="right" class="demo-split-pane">
         <h3>同级及下级</h3>
         <div>
-          <Button class="search-btn" type="success" size="small" @click="handleAdd">
+          <Button
+            v-if="userAccess.isAdd"
+            class="search-btn"
+            type="success"
+            size="small"
+            @click="handleAdd"
+          >
             <Icon type="md-add" />&nbsp;&nbsp;新增
           </Button>
         </div>
         <div>
-            <Table ref="tables" height="700"  :data="tableData1" v-bind:columns="tableColumns1" stripe></Table>
+          <Table ref="tables" height="700" :data="tableData1" v-bind:columns="tableColumns1" stripe>
+                <template slot-scope="{ row, index }" slot="action">
+                  <Button v-if="userAccess.isEdit" type="primary" size="small" icon="md-create" style="margin-right: 5px" @click="handleEdit(row)">编辑</Button>
+                  <Button v-if="userAccess.isMove" type="error"  size="small" icon="md-trash" @click="handleDelete(row)">删除</Button>
+               </template>
+          </Table>
         </div>
-      
       </div>
     </Split>
-        <!--垂直居中 class-name="vertical-center-modal" 和draggable冲突 draggable后mask强制变为false-->
+    <!--垂直居中 class-name="vertical-center-modal" 和draggable冲突 draggable后mask强制变为false-->
     <Modal
       title="编辑"
       :mask-closable="false"
@@ -43,12 +53,20 @@
   </div>
 </template>
 <script>
-import FunctionTree from "./FunctionTree"
-import Edit from "./Edit"
-import {getChildList,remove} from "@/api/pubFunction"
+import FunctionTree from "./FunctionTree";
+import Edit from "./Edit";
+import { getChildList, remove } from "@/api/pubFunction";
+import { pubFunction } from "@/access/pubFunction";
 export default {
   data() {
+    const userAccessAll = this.$store.state.user.access;
     return {
+      userAccess: {
+        isAdd: userAccessAll.includes(`${pubFunction.ADD}`),
+        isEdit: userAccessAll.includes(`${pubFunction.EDIT}`),
+        isMove: userAccessAll.includes(`${pubFunction.REMOVE}`),
+        isAuth: userAccessAll.includes(`${pubFunction.AUTH}`)
+      },
       split1: "300",
       tableData1: [],
       pageTotal: 0,
@@ -56,7 +74,7 @@ export default {
       modelEdit: false,
       isAdd: true,
       eidtRow: {},
-      selectedCode:"",
+      selectedCode: "",
       tableColumns1: [
         {
           title: "编号",
@@ -74,55 +92,15 @@ export default {
           title: "修改时间",
           key: "editdate"
         },
-         {
+        {
           title: "修改人",
           key: "editor"
         },
         {
           title: "操作",
-          key: "action",
-          width: 200,
-          align: "center",
-          render: (h, params) => {
-            return h("div", [
-              // ios-create-outline
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "primary",
-                    size: "small",
-                    icon: "md-create"
-                  },
-                  style: {
-                    marginRight: "5px"
-                  },
-                  on: {
-                    click: () => {
-                      this.handleEdit(params);
-                    }
-                  }
-                },
-                "编辑"
-              ),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "error",
-                    size: "small",
-                    icon: "md-trash"
-                  },
-                  on: {
-                    click: () => {
-                      this.handleDelete(params);
-                    }
-                  }
-                },
-                "删除"
-              )
-            ]);
-          }
+          slot: "action",
+          width: 300,
+          align: "center"
         }
       ]
     };
@@ -131,7 +109,7 @@ export default {
     FunctionTree,
     Edit
   },
-  methods:{
+  methods: {
     setPageData() {
       getChildList(this.selectedCode)
         .then(res => {
@@ -147,8 +125,7 @@ export default {
         })
         .catch(err => {});
     },
-    handleDelete(params) {
-      var row = params.row;
+    handleDelete(row) {
       this.$Modal.confirm({
         title: "提示",
         content: "<p>确定要删除[" + row.functionCode + "]?</p>",
@@ -165,10 +142,10 @@ export default {
       this.isAdd = true;
       this.eidtRow = {};
     },
-    handleEdit(params) {
+    handleEdit(row) {
       this.modelEdit = true;
       this.isAdd = false;
-      this.eidtRow = params.row;
+      this.eidtRow = row;
     },
     remove(row) {
       var id = row.functionCode;
@@ -190,17 +167,17 @@ export default {
     saveEdit() {
       var row = this.$refs.edit.Row;
     },
-    functionChange(code){
-      this.selectedCode=code;
+    functionChange(code) {
+      this.selectedCode = code;
       this.setPageData();
     },
-    reloadAll(parnetCode){
+    reloadAll(parnetCode) {
       this.$refs.functionTree.getFunctions();
       this.functionChange(parnetCode);
     }
   },
-  mounted(){
-      this.setPageData();
+  mounted() {
+    this.setPageData();
   }
 };
 </script>
