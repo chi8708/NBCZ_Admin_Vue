@@ -127,11 +127,12 @@ let menus= [
     },
     component: () => import('@/view/error-page/404.vue')
   }
+ 
 ]
 
 
  var resMenu= getMenu();
- if(resMenu.code==1){
+ if(resMenu&&resMenu.code==1){
    var resMenuData=resMenu.data;
    menuReset(resMenuData);
    resMenuData.forEach(item=>{

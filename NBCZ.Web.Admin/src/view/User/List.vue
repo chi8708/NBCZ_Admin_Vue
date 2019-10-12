@@ -27,9 +27,9 @@
       </Table> -->
      <Table ref="tables" :data="tableData1" v-bind:columns="tableColumns1" stripe>
         <template slot-scope="{ row, index }" slot="action">
-            <Button v-if="userAccess.isEdit" type="default"  size="small" icon="md-key" style="margin-right: 5px" @click="handlePermission(row)">授权</Button>
-            <Button v-if="userAccess.isMove" type="primary" size="small" icon="md-create" style="margin-right: 5px" @click="handleEdit(row)">编辑</Button>
-            <Button v-if="userAccess.isAuth" type="error"  size="small" icon="md-trash" @click="handleDelete(row)">删除</Button>
+            <Button v-if="userAccess.isAuth" type="default"  size="small" icon="md-key" style="margin-right: 5px" @click="handlePermission(row)">授权</Button>
+            <Button v-if="userAccess.isEdit" type="primary" size="small" icon="md-create" style="margin-right: 5px" @click="handleEdit(row)">编辑</Button>
+            <Button v-if="userAccess.isMove" type="error"  size="small" icon="md-trash" @click="handleDelete(row)">删除</Button>
         </template>
     </Table>
       <div style="margin: 10px;overflow: hidden">
@@ -80,16 +80,17 @@ import Edit from "./Edit";
 import Permission from "./Permission";
 import { getPage, remove as removeUser } from "@/api/pubUser";
 import { pubUser } from "@/access/pubUser"
+import { log } from 'util';
 
 export default {
-  name: 'userManage',//与 router.js notCache:fasle且name相同 将缓存组件。
+  name: 'USERINFO',//与 router.js notCache:fasle且name相同 将缓存组件。
   components: {
     // Tables
     Edit,
     Permission
   },
   data() {
-    const userAccessAll=`,${this.$store.state.user.access},`;
+    const userAccessAll=this.$store.state.user.access;
     return {
       tableData1: [],
       queryData: {},
@@ -100,10 +101,10 @@ export default {
       isAdd: true,
       eidtRow: {},
       userAccess:{
-        isAdd:userAccessAll.indexOf(`,${pubUser.USERINFOADD},`)>-1,
-        isEdit:userAccessAll.indexOf(`,${pubUser.USERINFOEDIT},`)>-1,
-        isMove:userAccessAll.indexOf(`,${pubUser.USERINFOREMOVE},`)>-1,
-        isAuth:userAccessAll.indexOf(`,${pubUser.USERINFOAUTH},`)>-1
+        isAdd:userAccessAll.includes(`${pubUser.USERINFOADD}`),
+        isEdit:userAccessAll.includes(`${pubUser.USERINFOEDIT}`),
+        isMove:userAccessAll.includes(`${pubUser.USERINFOREMOVE}`),
+        isAuth:userAccessAll.includes(`${pubUser.USERINFOAUTH}`)
       },
       tableColumns1: [
         {

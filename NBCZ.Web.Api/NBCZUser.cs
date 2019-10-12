@@ -88,7 +88,6 @@ namespace NBCZ.Web.Api
                 //var roleFunctions = new Pub_RoleFunctionBLL().GetList(string.Format(" RoleCode IN(SELECT pur.RoleCode FROM Pub_UserRole AS pur WHERE pur.UserCode='{0}' )", this.UserCode)).Select(p => p.FunctionCode);
                 //var functions = userFunctions.Concat(roleFunctions).Distinct();
                 var functions = new Pub_FunctionBLL().GetUserAccess(this.UserCode);
-              //  var functionsStr = string.Join(",", functions);
 
                 return functions;
             }

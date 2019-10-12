@@ -70,6 +70,9 @@ export const getMenu=()=>{
     async: false,
     success: function (res) {
       data=res;
+    },
+    error:function(){
+      console.log("网络请求出错！");
     }
   })
   return data;
