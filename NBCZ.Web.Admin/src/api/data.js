@@ -23,11 +23,14 @@ export const errorReq = () => {
 }
 
 export const saveErrorLogger = info => {
-  return axios.request({
-    url: 'save_error_logger',
-    data: info,
-    method: 'post'
-  })
+  //cts 修改
+  return new Promise(()=>{},()=>{});
+
+  // return axios.request({
+  //   url: 'save_error_logger',
+  //   data: info,
+  //   method: 'post'
+  // })
 }
 
 export const uploadImg = formData => {

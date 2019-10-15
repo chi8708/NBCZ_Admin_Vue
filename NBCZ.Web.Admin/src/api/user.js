@@ -28,10 +28,12 @@ export const logout = (token) => {
 }
 
 export const getUnreadCount = () => {
-  return axios.request({
-    url: 'message/count',
-    method: 'get'
-  })
+  //cts 修改
+  return new Promise(()=>{},()=>{});
+  // return axios.request({
+  //   url: 'message/count',
+  //   method: 'get'
+  // })
 }
 
 export const getMessage = () => {
