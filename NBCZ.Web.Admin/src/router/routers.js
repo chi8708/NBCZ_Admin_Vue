@@ -162,7 +162,8 @@ function menuItemReset(item){
   }
   else{
     var path=item.component;
-    var component = ()=>import(`@/${path}`);
+   // const component = ()=>import(`@/${path}`);//vue-router路由懒加载
+    const component= resolve => require([`@/${path}`], resolve)//避免发布时js资源文件过多
     item.component=component;
   }
 }
