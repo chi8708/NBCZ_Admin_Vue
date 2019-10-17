@@ -10,8 +10,8 @@
 </style>
 <template>
   <div class="content-main">
-    <Split v-model="split1" max="300" min="300">
-      <div slot="left" class="demo-split-pane">
+    <Split v-model="split1" max="300" min="300" style="max-height:100%;overflow:auto;">
+      <div slot="left" class="demo-split-pane" >
         <h3>组织结构</h3>
         <dept-tree ref="deptTree" :parent="this"></dept-tree>
       </div>
@@ -23,7 +23,7 @@
           </Button>
         </div>
         <div>
-            <Table ref="tables" height="700"  :data="tableData1" v-bind:columns="tableColumns1" stripe>
+            <Table ref="tables" max-height ="700"  :data="tableData1" v-bind:columns="tableColumns1" stripe>
                <template slot-scope="{ row, index }" slot="action">
                   <Button v-if="userAccess.isAuth" type="default"  size="small" icon="md-key" style="margin-right: 5px" @click="handlePermission(row)">授权</Button>
                   <Button v-if="userAccess.isEdit" type="primary" size="small" icon="md-create" style="margin-right: 5px" @click="handleEdit(row)">编辑</Button>

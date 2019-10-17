@@ -253,6 +253,21 @@
             Initializes a new instance of the <see cref="T:NBCZ.Web.Api.Areas.HelpPage.HelpPageSampleGenerator"/> class.
             </summary>
         </member>
+        <member name="P:NBCZ.Web.Api.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:NBCZ.Web.Api.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:NBCZ.Web.Api.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
         <member name="M:NBCZ.Web.Api.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
             <summary>
             Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
@@ -316,21 +331,6 @@
             <param name="type">The type.</param>
             <param name="mediaType">Type of the media.</param>
             <returns></returns>
-        </member>
-        <member name="P:NBCZ.Web.Api.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
-            <summary>
-            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
-            </summary>
-        </member>
-        <member name="P:NBCZ.Web.Api.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
-            <summary>
-            Gets the objects that are used directly as samples for certain actions.
-            </summary>
-        </member>
-        <member name="P:NBCZ.Web.Api.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
-            <summary>
-            Gets the objects that are serialized as samples by the supported formatters.
-            </summary>
         </member>
         <member name="T:NBCZ.Web.Api.Areas.HelpPage.HelpPageSampleKey">
             <summary>
@@ -633,13 +633,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="F:WebApi.Jwt.JwtManager.Secret">
-            <summary>
-            Use the below code to generate symmetric Secret Key
-                var hmac = new HMACSHA256();
-                var key = Convert.ToBase64String(hmac.Key);
-            </summary>
-        </member>
         <member name="P:NBCZ.Web.Api.LoginViewModel.Name">
             <summary>
             用户名
@@ -666,6 +659,13 @@
             </summary>
             <param name="str"></param>
             <returns></returns>
+        </member>
+        <member name="F:WebApi.Jwt.JwtManager.Secret">
+            <summary>
+            Use the below code to generate symmetric Secret Key
+                var hmac = new HMACSHA256();
+                var key = Convert.ToBase64String(hmac.Key);
+            </summary>
         </member>
     </members>
 </doc>
