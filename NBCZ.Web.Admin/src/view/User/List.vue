@@ -25,7 +25,7 @@
       </div>
       <!-- <Table ref="tables" :data="tableData1" v-bind:columns="tableColumns1" stripe>
       </Table> -->
-     <Table ref="tables" :data="tableData1" v-bind:columns="tableColumns1" stripe>
+     <Table ref="tables" border :data="tableData1" v-bind:columns="tableColumns1" stripe>
         <template slot-scope="{ row, index }" slot="action">
             <Button v-if="userAccess.isAuth" type="default"  size="small" icon="md-key" style="margin-right: 5px" @click="handlePermission(row)">授权</Button>
             <Button v-if="userAccess.isEdit" type="primary" size="small" icon="md-create" style="margin-right: 5px" @click="handleEdit(row)">编辑</Button>
