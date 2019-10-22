@@ -3,7 +3,7 @@
 1. NBCZ_Admin_Vue是一个前后端分离通用权限系统， 用vs2017+sqlserver2012开发工具。
 2. 后端标准三层结构：
    1. Repository（DAL仓储层）使用Dapper.Contrib+Dapper开发。
-   2. api使用asp.net core webapi,jwt身份认证。
+   2. api使用asp.net webapi,jwt身份认证。
 3. 前端
    1. 基于vue的iview框架。
 --------  
