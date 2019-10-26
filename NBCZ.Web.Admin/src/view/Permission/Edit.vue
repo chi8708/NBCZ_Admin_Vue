@@ -237,7 +237,8 @@ export default {
   },
   watch: {
     editRow(newVal, oldVal) {
-      this.Row = Object.assign({}, newVal);
+	  this.handleReset();
+      this.Row = Object.assign({}, this.Row , newVal);
       this.Row.menuFlag = this.Row.menuFlag === false ? 0 : 1;
       this.Row.isCache = this.Row.isCache === false ? 0 : 1;
     }
