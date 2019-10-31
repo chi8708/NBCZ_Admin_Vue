@@ -56,7 +56,7 @@ export default {
     },
     saveFunctions() {
       let checkedNodes = this.$refs.functionTreeCheck.functionTreeItems;
-      let checkeds = checkedNodes.filter(p=>p.checked==true).map(p=>p.value);
+      let checkeds=checkedNodes.filter(p=>p.checked==true&&(!p.children || p.children.length<=0)).map(p=>p.value);
       saveFunctions(this.Row.userCode, checkeds)
         .then(res => {
           const resData = res.data;

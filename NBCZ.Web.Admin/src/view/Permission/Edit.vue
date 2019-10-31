@@ -237,8 +237,12 @@ export default {
   },
   watch: {
     editRow(newVal, oldVal) {
-	  this.handleReset();
-      this.Row = Object.assign({}, this.Row , newVal);
+      this.handleReset();
+      //响应式bug
+     if(this.parent.isAdd){
+        newVal.menuFlag=true;
+      }
+      this.Row = Object.assign({} , newVal);
       this.Row.menuFlag = this.Row.menuFlag === false ? 0 : 1;
       this.Row.isCache = this.Row.isCache === false ? 0 : 1;
     }
