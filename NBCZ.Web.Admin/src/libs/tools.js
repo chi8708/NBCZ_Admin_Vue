@@ -1,5 +1,5 @@
 export const forEach = (arr, fn) => {
-  if (!arr.length || !fn) return
+  if (!arr|| !arr.length || !fn) return
   let i = -1
   let len = arr.length
   while (++i < len) {

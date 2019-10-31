@@ -118,54 +118,55 @@ let menus= [
       hideInMenu: true
     },
     component: () => import('@/view/error-page/500.vue')
-  },
-  {
-    path: '*',
-    name: 'error_404',
-    meta: {
-      hideInMenu: true
-    },
-    component: () => import('@/view/error-page/404.vue')
   }
+  //刷新会闪404 bug
+  // {
+  //   path: '*',
+  //   name: 'error_404',
+  //   meta: {
+  //     hideInMenu: true
+  //   },
+  //   component: () => import('@/view/error-page/404.vue')
+  // }
  
 ]
 
 
- var resMenu= getMenu();
- if(resMenu&&resMenu.code==1){
-   var resMenuData=resMenu.data;
-   menuReset(resMenuData);
-   resMenuData.forEach(item=>{
-     menus.push(item);
-   })
- }
- //菜单重置
-function menuReset(resMenuData){
-  if(!resMenuData||resMenuData.length<=0){
-    return;
-  }
-  resMenuData.forEach(item => {
-    menuItemReset(item);
-    var child=item.children;
-    if(child&&child.length>0){
-      menuReset(child);
-    }
-    else{
-     delete item.children;
-    }
-  });
-}
+//  var resMenu= getMenu();
+//  if(resMenu&&resMenu.code==1){
+//    var resMenuData=resMenu.data;
+//    menuReset(resMenuData);
+//    resMenuData.forEach(item=>{
+//      menus.push(item);
+//    })
+//  }
+//  //菜单重置
+// function menuReset(resMenuData){
+//   if(!resMenuData||resMenuData.length<=0){
+//     return;
+//   }
+//   resMenuData.forEach(item => {
+//     menuItemReset(item);
+//     var child=item.children;
+//     if(child&&child.length>0){
+//       menuReset(child);
+//     }
+//     else{
+//      delete item.children;
+//     }
+//   });
+// }
 
-function menuItemReset(item){
-  if(item.component.toLowerCase()=='main'){
-    item.component=Main;
-  }
-  else{
-    var path=item.component;
-   // const component = ()=>import(`@/${path}`);//vue-router路由懒加载
-    const component= resolve => require([`@/${path}`], resolve)//避免发布时js资源文件过多
-    item.component=component;
-  }
-}
+// function menuItemReset(item){
+//   if(item.component.toLowerCase()=='main'){
+//     item.component=Main;
+//   }
+//   else{
+//     var path=item.component;
+//    // const component = ()=>import(`@/${path}`);//vue-router路由懒加载
+//     const component= resolve => require([`@/${path}`], resolve)//避免发布时js资源文件过多
+//     item.component=component;
+//   }
+// }
 
 export default menus

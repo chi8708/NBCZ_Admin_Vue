@@ -9,13 +9,21 @@ import {
   routeEqual,
   getRouteTitleHandled,
   localSave,
-  localRead
+  localRead,
+  filterUserRouter,
+  //处理动态路由的方法引入一下
+  backendMenusToRouters,
+  getUserMenuByRouter
 } from '@/libs/util'
-import { saveErrorLogger } from '@/api/data'
+import {saveErrorLogger} from '@/api/data'
 import router from '@/router'
 import routers from '@/router/routers'
 import config from '@/config'
-const { homeName } = config
+/////加载动态路由的请求引入一下
+import {getRouterReq, getUserPerms} from '@/api/routers'
+//import dynamicRouters from '@/router/dynamic-routers'
+
+const {homeName} = config
 
 const closePage = (state, route) => {
   const nextRoute = getNextRoute(state.tagNavList, route)
@@ -32,20 +40,33 @@ export default {
     homeRoute: {},
     local: localRead('local'),
     errorList: [],
-    hasReadErrorPage: false
+    hasReadErrorPage: false,
+    //拿到的路由数据
+    routers: [],
+    //是否已经拿过路由数据
+    hasGetRouter: false
   },
   getters: {
-    menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
+    // menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
+    menuList: (state, getters, rootState) => getUserMenuByRouter(routers.concat(state.routers)),
     errorCount: state => state.errorList.length
   },
   mutations: {
-    setBreadCrumb (state, route) {
+    //设置路由数据
+    setRouters(state, routers) {
+      state.routers = routers
+    },
+    //设置是否已经拿过路由
+    setHasGetRouter(state, status) {
+      state.hasGetRouter = status
+    },
+    setBreadCrumb(state, route) {
       state.breadCrumbList = getBreadCrumbList(route, state.homeRoute)
     },
-    setHomeRoute (state, routes) {
+    setHomeRoute(state, routes) {
       state.homeRoute = getHomeRoute(routes, homeName)
     },
-    setTagNavList (state, list) {
+    setTagNavList(state, list) {
       let tagList = []
       if (list) {
         tagList = [...list]
@@ -59,13 +80,13 @@ export default {
       state.tagNavList = tagList
       setTagNavListInLocalstorage([...tagList])
     },
-    closeTag (state, route) {
+    closeTag(state, route) {
       let tag = state.tagNavList.filter(item => routeEqual(item, route))
       route = tag[0] ? tag[0] : null
       if (!route) return
       closePage(state, route)
     },
-    addTag (state, { route, type = 'unshift' }) {
+    addTag(state, {route, type = 'unshift'}) {
       let router = getRouteTitleHandled(route)
       if (!routeHasExist(state.tagNavList, router)) {
         if (type === 'push') state.tagNavList.push(router)
@@ -76,21 +97,66 @@ export default {
         setTagNavListInLocalstorage([...state.tagNavList])
       }
     },
-    setLocal (state, lang) {
+    setLocal(state, lang) {
       localSave('local', lang)
       state.local = lang
     },
-    addError (state, error) {
+    addError(state, error) {
       state.errorList.push(error)
     },
-    setHasReadErrorLoggerStatus (state, status = true) {
+    setHasReadErrorLoggerStatus(state, status = true) {
       state.hasReadErrorPage = status
     }
   },
   actions: {
-    addErrorLog ({ commit, rootState }, info) {
+    /**
+     * 从后台获取用户拥有的菜单权限数组
+     * @param commit
+     * @returns {Promise<unknown>}
+     */
+    getUserMenus({commit}) {
+      return new Promise((resolve, reject) => {
+        try {
+          getUserPerms().then(res => {
+           // let routers = filterUserRouter(dynamicRouters, res.data)
+           //console.log(res);
+          // let routers = filterUserRouter(res.data, res.data)
+            let routers=backendMenusToRouters(res.data.data);
+            commit('setRouters', routers)
+            commit('setHasGetRouter', true)
+            resolve(routers)
+          }).catch(err => {
+            reject(err)
+          })
+        } catch (error) {
+          reject(error)
+        }
+      })
+    },
+    // /**
+    //  * 获取系统路由
+    //  * @param commit
+    //  * @returns {Promise<unknown>}
+    //  */
+    // getRouters({commit}) {
+    //   return new Promise((resolve, reject) => {
+    //     try {
+    //       getRouterReq().then(res => {
+    //         let routers = backendMenusToRouters(res.data)
+    //         commit('setRouters', routers)
+    //         commit('setHasGetRouter', true)
+    //         resolve(routers)
+    //       }).catch(err => {
+    //         reject(err)
+    //       })
+    //     } catch (error) {
+    //       reject(error)
+    //     }
+    //   })
+    // },
+    addErrorLog({commit, rootState}, info) {
       if (!window.location.href.includes('error_logger_page')) commit('setHasReadErrorLoggerStatus', false)
-      const { user: { token, userId, userName } } = rootState
+      const {user: {token, userId, userName}} = rootState
       let data = {
         ...info,
         time: Date.parse(new Date()),

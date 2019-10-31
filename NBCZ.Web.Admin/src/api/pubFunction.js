@@ -1,6 +1,6 @@
 import axios from '@/libs/api.request'
 import store from '@/store'
-import $ from 'jquery';
+//import $ from 'jquery';
 import config from '@/config'
 const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
 
@@ -61,19 +61,19 @@ export const remove=(id)=>{
 //   })
 // }
 
-export const getMenu=()=>{
-  var data;
-  $.ajax({
-    type: 'post',
-    url: baseUrl+'/api/PubFunction/getMenu',
-    dataType: 'Json',
-    async: false,
-    success: function (res) {
-      data=res;
-    },
-    error:function(){
-      console.log("网络请求出错！");
-    }
-  })
-  return data;
-}
+// export const getMenu=()=>{
+//   var data;
+//   $.ajax({
+//     type: 'post',
+//     url: baseUrl+'/api/PubFunction/getMenu',
+//     dataType: 'Json',
+//     async: false,
+//     success: function (res) {
+//       data=res;
+//     },
+//     error:function(){
+//       console.log("网络请求出错！");
+//     }
+//   })
+//   return data;
+// }

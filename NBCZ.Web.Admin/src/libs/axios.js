@@ -3,6 +3,7 @@ import store from '@/store'
 import { getToken } from '@/libs/util'
 // import { Spin } from 'iview'
 var token=getToken();
+//var token=store.state.user.token;
 const addErrorLog = errorInfo => {
   const { statusText, status, request: { responseURL } } = errorInfo
   let info = {

@@ -118,7 +118,7 @@ namespace NBCZ.Web.Api.Controllers
 
             DataRes<List<Menu>> res = new DataRes<List<Menu>>() { code = ResCode.Success, data = menus };
            // List<Pub_Function> functions= bll.GetMenu(User.GetNBCZUser().UserCode);
-            List<Pub_Function> functions = bll.GetMenu("");
+            List<Pub_Function> functions = bll.GetMenu(User.GetNBCZUser().UserCode);
             List<Pub_Function> functionsRoot = functions.Where(p=>p.FunctionCode.Length==5).ToList();
             foreach (var item in functionsRoot)
             {
