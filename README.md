@@ -45,9 +45,9 @@
 </tr>
 <tr>
 	<td>.Net Framework + Vue </td>
-	<td><a href="https://github.com/chi8708/NBCZ_Admin_Vue" >.net framework+layui+dapper-extensions</a> </td>
+	<td><a href="https://github.com/chi8708/NBCZ_Admin_Vue" >.net framework+iview+dapper.contrib</a> </td>
 	<td><a href="https://github.com/chi8708/NBCZ_Admin_Vue/blob/master/LICENSE" target="_blank" >MIT</a></td>
-	<td></td>	
+	<td>前后端分离</td>	
 </tr>
 <tr>
 	<td>.Net Core</td>
