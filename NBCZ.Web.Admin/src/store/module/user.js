@@ -103,6 +103,8 @@ export default {
           commit('setToken', '')
           commit('setAccess', [])
           resolve()
+		  // cts 清空vuex 
+          window.location.reload()
         }).catch(err => {
           reject(err)
         })
