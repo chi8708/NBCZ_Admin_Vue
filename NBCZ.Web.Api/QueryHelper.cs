@@ -40,6 +40,8 @@ namespace NBCZ.Web.Api
                 var request = context.Request;
                 var body = request.Content;
 
+				 //posData为空bug： Action参数存在[FromBody]等读取内容的方法时，会被[FromBody]“吃掉”，指针重定向或继承BaseController重新 Initialize
+               // request.Content.ReadAsStreamAsync().Result.Seek(0, System.IO.SeekOrigin.Begin);
                 postData = body.ReadAsStringAsync().Result;
                 var query = new Dictionary<string, object>();
                 if (string.IsNullOrEmpty(postData))
