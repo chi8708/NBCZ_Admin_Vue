@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using NBCZ.BLL;
 using NBCZ.Model;
 using System.Web.Http;
+using NBCZ.Web.Api.Request;
 
 namespace NBCZ.Web.Api.Controllers
 {
@@ -32,7 +33,8 @@ namespace NBCZ.Web.Api.Controllers
                 access = access,
                 avatar = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
                 name = userName,
-                user_id = userCode
+                user_id = user.Id,
+                user_code = userCode
             };
         }
 
@@ -182,6 +184,50 @@ namespace NBCZ.Web.Api.Controllers
                 res.data = false;
                 res.msg = "保存失败";
             }
+
+            return res;
+        }
+
+
+        /// <summary>
+        /// 修改用户密码
+        /// </summary>
+        /// <returns></returns>
+        [Route("EditPassword")]
+        [HttpPost]
+        public DataRes<bool> EditPassword(EditPasswordReq model)
+        {
+            DataRes<bool> res = new DataRes<bool>() { code = ResCode.Success, data = true };
+            var user = User.GetNBCZUser();
+
+            if (user == null)
+            {
+                res.code = ResCode.NoValidate;
+                res.data = false;
+                res.msg = "用户未登陆";
+
+                return res;
+            }
+            var oldModel = bll.Get(user.Id);
+
+            if (oldModel.UserPwd != model.OldPassword)
+            {
+                res.code = ResCode.NoValidate;
+                res.data = false;
+                res.msg = "原密码不正确";
+
+                return res;
+            }
+
+            bll.EditPassword(user.Id, model.Password, user.UserCode + "-" + user.UserName);
+            if (user == null)
+            {
+                res.code = ResCode.Error;
+                res.data = false;
+                res.msg = "保存失败";
+                return res;
+            }
+
 
             return res;
         }

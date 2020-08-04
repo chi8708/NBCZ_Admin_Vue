@@ -21,6 +21,8 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -183,6 +185,7 @@
     <Compile Include="jwt\JwtAuthenticationAttribute.cs" />
     <Compile Include="jwt\JwtManager.cs" />
     <Compile Include="jwt\LoginViewModel.cs" />
+    <Compile Include="Models\Request\EditPasswordReq.cs" />
     <Compile Include="Models\Request\PageDataReq.cs" />
     <Compile Include="NBCZUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

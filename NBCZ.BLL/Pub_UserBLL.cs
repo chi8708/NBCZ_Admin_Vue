@@ -137,5 +137,18 @@ namespace NBCZ.BLL
             return Tuple.Create(r, r ? "保存成功" : "保存失败");
 
         }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public Tuple<bool, string> EditPassword(int id, string password, string editor)
+        {
+            var r = dal.EditPassword(id, password, editor);
+
+            return Tuple.Create(r, r ? "保存成功" : "保存失败");
+        }
     }
 }

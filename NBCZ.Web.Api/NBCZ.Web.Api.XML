@@ -633,6 +633,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:NBCZ.Web.Api.Controllers.PubUserController.EditPassword(NBCZ.Web.Api.Request.EditPasswordReq)">
+            <summary>
+            修改用户密码
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:NBCZ.Web.Api.LoginViewModel.Name">
             <summary>
             用户名
@@ -641,6 +647,16 @@
         <member name="P:NBCZ.Web.Api.LoginViewModel.Password">
             <summary>
             密码
+            </summary>
+        </member>
+        <member name="P:NBCZ.Web.Api.Request.EditPasswordReq.OldPassword">
+            <summary>
+            原密码
+            </summary>
+        </member>
+        <member name="P:NBCZ.Web.Api.Request.EditPasswordReq.Password">
+            <summary>
+            新密码
             </summary>
         </member>
         <member name="T:NBCZ.Web.Api.QueryHelper">

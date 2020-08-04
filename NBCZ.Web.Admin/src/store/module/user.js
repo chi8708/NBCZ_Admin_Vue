@@ -35,6 +35,10 @@ export default {
     setUserName (state, name) {
       state.userName = name
     },
+    //cts 添加
+    setUserCode (state, name) {
+    state.userCode = name
+    },
     setAccess (state, access) {
       state.access = access
     },
@@ -123,6 +127,7 @@ export default {
             commit('setAvatar', data.avatar)
             commit('setUserName', data.name)
             commit('setUserId', data.user_id)
+            commit('setUserCode', data.user_code)
             commit('setAccess', data.access)
             commit('setHasGetInfo', true)
             resolve(data)

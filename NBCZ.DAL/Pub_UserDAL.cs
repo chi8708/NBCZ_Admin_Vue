@@ -39,5 +39,26 @@ namespace NBCZ.DAL
 
             return DapperHelper.Excute(sql,pms) > 0;
         }
+
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool EditPassword(int id, string password, string editor)
+        {
+            string sql = "UPDATE Pub_User SET UserPwd =@UserPwd, Lmid =@Lmid,Lmdt =GETDATE()  WHERE Id=@Id ";
+            var pms = new
+            {
+                UserPwd = password,
+                Id = id,
+                Lmid = editor
+            };
+
+            return DapperHelper.Excute(sql, pms) > 0;
+        }
+
     }
 }

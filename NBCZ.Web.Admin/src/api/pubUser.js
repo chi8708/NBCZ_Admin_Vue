@@ -70,3 +70,13 @@ export const saveFunctions=(code,data)=>{
     method: 'post'
   })
 }
+
+
+//修改密码
+export const editPassword=(data)=>{
+  return axios.request({
+    url: 'api/PubUser/EditPassword/',
+    data,
+    method: 'post'
+  })
+}
