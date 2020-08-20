@@ -106,6 +106,7 @@ export default {
         logout(state.token).then(() => {
           commit('setToken', '')
           commit('setAccess', [])
+          commit('setTagNavList', [])
           resolve()
 		  // cts 清空vuex 
           window.location.reload()
