@@ -669,6 +669,21 @@
             获取搜索query
             </summary>
         </member>
+        <member name="M:NBCZ.Web.Api.QueryHelper.InjectionFilter(System.String)">
+            <summary>
+             过滤危险字符
+            </summary>
+            <param name="inputString">需要过滤字符串</param>
+            <returns>过滤后的字符串</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:NBCZ.Web.Api.QueryHelper.XSSFilter(System.String)" -->
+        <member name="M:NBCZ.Web.Api.QueryHelper.FlashFilter(System.String)">
+            <summary>
+             过滤字符串中注入Flash代码
+            </summary>
+            <param name="htmlCode">输入字符串</param>
+            <returns>过滤后的字符串</returns>
+        </member>
         <member name="M:NBCZ.Web.Api.QueryHelper.SqlFilter(System.String)">
             <summary>
             过滤危险的字符（SQL注入）
