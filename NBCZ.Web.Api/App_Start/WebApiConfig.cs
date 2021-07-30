@@ -83,7 +83,11 @@ namespace NBCZ.Web.Api
                         {
                             result = "";
                         }
-                        else if (type == typeof(Nullable<Int16>) ||
+                        else if (type == typeof(Nullable<Int16>))
+                        {
+                            result = Convert.ToInt16(0);
+                        }
+                        else if (
                             type == typeof(Nullable<Int32>) ||
                             type == typeof(Nullable<Int64>))
                         {
@@ -100,6 +104,15 @@ namespace NBCZ.Web.Api
                         else if (type == typeof(Nullable<DateTime>))
                         {
                             result = DateTime.MinValue;
+                        }
+                        else if (type == typeof(Nullable<Boolean>))
+                        {
+                            result = false;
+                        }
+
+                        else if (type == typeof(Nullable<Byte>))
+                        {
+                            result = Byte.MinValue;
                         }
                         else
                         {
