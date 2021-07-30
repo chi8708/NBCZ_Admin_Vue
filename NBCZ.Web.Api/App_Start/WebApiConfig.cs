@@ -85,7 +85,7 @@ namespace NBCZ.Web.Api
                         }
                         else if (type == typeof(Nullable<Int16>))
                         {
-                            result = Convert.ToInt16(0);
+                            result = new Nullable<Int16>(0);
                         }
                         else if (
                             type == typeof(Nullable<Int32>) ||
