@@ -57,7 +57,7 @@
       footer-hide
       @on-ok="saveEdit"
     >
-      <Edit ref="edit" :parent="this" :edit-row="eidtRow"></Edit>
+      <Edit ref="edit" v-if="modelEdit" :parent="this" :edit-row="eidtRow"></Edit>
     </Modal>
 
      <Modal

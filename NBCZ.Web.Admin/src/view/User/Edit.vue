@@ -282,14 +282,18 @@ export default {
     }
   },
   watch: {
-    editRow(newVal, oldVal) {
-	  this.handleReset();
-      this.Row = Object.assign({}, newVal);
-      this.Row.sex = this.Row.sex === false ? 0 : 1;
-    }
+    //list使用v-if 每次点击编辑会重新加载组件
+    // editRow(newVal, oldVal) {
+	  // this.handleReset();
+    //   this.Row = Object.assign({}, newVal);
+    //   this.Row.sex = this.Row.sex === false ? 0 : 1;
+    // }
   },
   mounted() {
     this.getRoles();
+    this.Row = Object.assign({}, this.editRow);
+    this.Row.sex = this.Row.sex === false ? 0 : 1;
+
   }
 };
 </script>
