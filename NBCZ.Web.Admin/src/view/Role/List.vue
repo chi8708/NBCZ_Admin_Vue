@@ -69,7 +69,7 @@
 </template>
 <script>
 //import Tables from '_c/tables'
-import "@/assets/css/util.less";
+//import "@/assets/css/util.less";
 import Edit from "./Edit";
 import Permission from "./Permission";
 import { getPage, remove} from "@/api/pubRole";

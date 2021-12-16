@@ -4,7 +4,7 @@ using Swashbuckle.Application;
 using System.Linq;
 using NBCZ.Web.Api;
 
-[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
+//[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
 namespace NBCZ.Web.Api
 {
