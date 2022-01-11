@@ -126,6 +126,15 @@ export default {
         window.open(name.split('_')[1])
         return
       }
+       //debugger;
+      if (name.toLowerCase().indexOf('isnew_') > -1) {
+        let routeUrl = this.$router.resolve({
+              path: '/'+name+'_Blank'
+        });
+        window.open(routeUrl.href, '_blank');
+         return;
+      }
+
       this.$router.push({
         name,
         params,

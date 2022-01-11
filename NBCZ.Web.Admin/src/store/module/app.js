@@ -12,6 +12,7 @@ import {
   localRead,
   filterUserRouter,
   //处理动态路由的方法引入一下
+  backendMenusToRoutersNewBlank,
   backendMenusToRouters,
   getUserMenuByRouter
 } from '@/libs/util'
@@ -122,6 +123,8 @@ export default {
            //console.log(res);
           // let routers = filterUserRouter(res.data, res.data)
             let routers=backendMenusToRouters(res.data.data);
+            let routersNew= backendMenusToRoutersNewBlank();
+            routers= routers.concat(routersNew);
             commit('setRouters', routers)
             commit('setHasGetRouter', true)
             resolve(routers)

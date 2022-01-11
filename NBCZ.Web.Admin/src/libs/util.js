@@ -399,7 +399,11 @@ export const setTitle = (routeItem, vm) => {
   window.document.title = resTitle
 }
 
-
+let routersNew = [];
+//新页面打开的菜单
+export const backendMenusToRoutersNewBlank =()=>{
+   return routersNew;
+}
 
 ///////////////动态路由
 /**
@@ -417,6 +421,19 @@ export const backendMenusToRouters = (menus) => {
       route.children = backendMenusToRouters(menu.children)
     }
     routers.push(route)
+
+    if(menu.name.toLowerCase().indexOf('isnew_') > -1){
+      //debugger;
+      var routeItem={
+          name:menu.name,
+          path:'/'+menu.name+'_Blank',
+          meta: {hideInMenu: true},
+          parent:null,
+          component: resolve => require([`@/${menu.component}`], resolve)
+        };
+        routersNew.push(routeItem)
+    }
+
   })
   return routers
 }
