@@ -19,8 +19,8 @@ import 'v-org-tree/dist/v-org-tree.css'
 import * as echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 // 实际打包时应该不引入mock
-/* eslint-disable */
-if (process.env.NODE_ENV !== 'production') require('@/mock')
+/* eslint-disable */ //注释 不然导出excel报错内部错误无法打开文件
+//if (process.env.NODE_ENV !== 'production') require('@/mock')
 //require('@/mock')
 Vue.use(ViewUI, {
   i18n: (key, value) => i18n.t(key, value)
