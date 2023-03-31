@@ -14,7 +14,8 @@ namespace NBCZ.Web.Api
     {
         public static void Register(HttpConfiguration config)
         {
-           if (ConfigurationManager.AppSettings["isShowDoc"] == "1") { SwaggerConfig.Register(); }
+			//http://localhost:51534/swagger/ui/index
+			if (ConfigurationManager.AppSettings["isShowDoc"] == "1") { SwaggerConfig.Register(); }
             // Web API configuration and services
             config.Filters.Add(new AuthorizeAttribute());
 
