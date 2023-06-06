@@ -6,6 +6,8 @@
    2. api使用asp.net webapi,jwt身份认证。
 3. 前端
    1. 基于vue的iview框架。
+4. 在线预览http://106.14.91.48:8918/ 登录名：admin 密码：123123
+
 --------  
 
 二、配置使用
@@ -31,7 +33,7 @@
 
 三、主界面如下：
 ---------------
-<img src="https://github.com/chi8708/NBCZ_Admin_NetCore/blob/master/main.png" width="900px;">
+<img src="https://github.com/chi8708/CNet_Admin/blob/main/main.png" width="900px;">
 
 四、版本
 ---------------
@@ -53,6 +55,12 @@
 	<td>.Net Core</td>
 	<td><a href="https://github.com/chi8708/NBCZ_Admin_NetCore" >.net core+iview+dapper.contrib</a> </td>
 	<td><a href="https://github.com/chi8708/NBCZ_Admin_NetCore/blob/master/LICENSE" target="_blank" >MIT</a></td>
+	<td>前后端分离</td>
+</tr>
+<tr>
+	<td>.Net5</td>
+	<td><a href="https://github.com/chi8708/CNet_Admin" >.net5+iview+dapper.contrib</a> </td>
+	<td><a href="https://github.com/chi8708/CNet_Admin/blob/main/LICENSE" target="_blank" >MIT</a></td>
 	<td>前后端分离</td>
 </tr>
 </table>
