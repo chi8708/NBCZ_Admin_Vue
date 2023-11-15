@@ -6,7 +6,7 @@
    2. api使用asp.net webapi,jwt身份认证。
 3. 前端
    1. 基于vue的iview框架。
-4. 在线预览http://106.14.91.48:8918/ 登录名：admin 密码：123123
+4. 在线预览(http://www.gitrk.cn:8918/)  登录名：admin 密码：123123
 
 --------  
 
