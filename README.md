@@ -87,10 +87,11 @@ Git笔记公众号
 -----------------
 <img src="https://github.com/chi8708/NBCZ/blob/master/zs.jpg" />
 
+应用案例
 -----------
-Aigu开发 github热门排行，微信小程序看源码
------------------
-<img src="tg.jpg" style="width:260px;" />
+AI口红试妆小程序管理后台
+<br/>
+<img src="https://github.com/chi8708/DotNetDemoAll/blob/master/lipStick.jpg" style="width:260px;" />
 
 
 
